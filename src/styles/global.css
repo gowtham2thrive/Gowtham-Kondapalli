@@ -25,17 +25,21 @@ html {
     background-color: var(--color-bg);
     color: var(--color-text);
     line-height: 1.6;
-    overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll on mobile */
 }
 
 /* Body: full viewport height, smooth font rendering, no text selection */
 body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-    user-select: none;       /* App-like: disable text selection */
+    user-select: none;
+    /* App-like: disable text selection */
     -webkit-user-select: none;
-    overflow-x: hidden;      /* Prevent horizontal scroll */
-    overflow-wrap: break-word; /* Prevent long text from breaking layout */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    overflow-wrap: break-word;
+    /* Prevent long text from breaking layout */
 }
 
 /* -------------------------------------------------------------------------- */
@@ -48,7 +52,8 @@ a {
     color: inherit;
     text-decoration: none;
     transition: color 0.2s ease;
-    -webkit-user-drag: none; /* App-like: disable link dragging */
+    -webkit-user-drag: none;
+    /* App-like: disable link dragging */
 }
 
 a:hover {
@@ -59,8 +64,11 @@ a:hover {
 img {
     max-width: 100%;
     display: block;
-    -webkit-user-drag: none; /* App-like: disable image dragging */
+    -webkit-user-drag: none;
+    /* App-like: disable image dragging */
     user-select: none;
+    pointer-events: none;
+    /* JSON: Disable context menu/download */
 }
 
 /* Buttons: reset browser defaults */
@@ -70,7 +78,14 @@ button {
     background: none;
     font: inherit;
     color: inherit;
-    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight on mobile */
+}
+
+button:focus,
+button:active {
+    outline: none;
+    box-shadow: none;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -82,7 +97,8 @@ button {
 .container {
     max-width: var(--container-width);
     margin: 0 auto;
-    padding: 0 1.5rem; /* Side padding for edge breathing room */
+    padding: 0 1.5rem;
+    /* Side padding for edge breathing room */
     width: 100%;
 }
 
@@ -93,16 +109,19 @@ button {
 
 /* Section Title: gradient text, responsive sizing */
 .section-title {
-    font-size: clamp(2rem, 5vw, 2.5rem); /* Responsive font size */
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    /* Responsive font size */
     font-weight: 800;
     margin-bottom: var(--spacing-lg);
-    padding-top: var(--spacing-md); /* Spacing above title */
+    padding-top: var(--spacing-md);
+    /* Spacing above title */
     background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     display: inline-block;
-    line-height: 1.2; /* Tight line height for multi-line titles */
+    line-height: 1.2;
+    /* Tight line height for multi-line titles */
 }
 
 /* Header Navigation List: horizontal nav links */
@@ -123,6 +142,7 @@ button {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -143,11 +163,13 @@ button {
 /* Timeline container: horizontal row of education items */
 .education-timeline {
     display: flex;
-    flex-direction: row;         /* Horizontal on desktop */
+    flex-direction: row;
+    /* Horizontal on desktop */
     justify-content: space-between;
     position: relative;
     gap: 2rem;
-    margin-top: 4rem;            /* Space for floating cards */
+    margin-top: 4rem;
+    /* Space for floating cards */
 }
 
 /* Each timeline item: column of icon + card */
@@ -166,10 +188,14 @@ button {
     content: '';
     position: absolute;
     background-color: var(--color-border);
-    z-index: -1;                  /* Behind icons */
-    top: 40px;                    /* Vertically centered on icon */
-    left: 50%;                    /* Start at icon center */
-    width: calc(100% + 2rem);    /* Span to next icon including gap */
+    z-index: -1;
+    /* Behind icons */
+    top: 40px;
+    /* Vertically centered on icon */
+    left: 50%;
+    /* Start at icon center */
+    width: calc(100% + 2rem);
+    /* Span to next icon including gap */
     height: 4px;
 }
 
@@ -192,7 +218,8 @@ button {
     justify-content: center;
     font-size: 2rem;
     color: var(--color-primary);
-    z-index: 2;                  /* Above connector line */
+    z-index: 2;
+    /* Above connector line */
     margin-bottom: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -227,12 +254,15 @@ button {
 /* ---- TABLET (≤ 1024px) ---- */
 @media (max-width: 1024px) {
     :root {
-        --spacing-xl: 8rem;      /* Section spacing */
-        --spacing-lg: 4rem;      /* Block spacing */
+        --spacing-xl: 8rem;
+        /* Section spacing */
+        --spacing-lg: 4rem;
+        /* Block spacing */
     }
 
     .container {
-        padding: 0 2rem;        /* Wider side padding on tablet */
+        padding: 0 2rem;
+        /* Wider side padding on tablet */
     }
 
     /* Education: switch to vertical layout, reversed order (school → degree) */
@@ -242,7 +272,8 @@ button {
         margin-top: 0;
         padding-left: 0;
         padding-top: 2rem;
-        position: static;       /* Remove relative for clean stacking */
+        position: static;
+        /* Remove relative for clean stacking */
     }
 
     /* Remove horizontal connector lines */
@@ -250,9 +281,11 @@ button {
         content: none;
         display: none;
     }
+
     .education-item:not(:last-child)::after {
         content: none;
     }
+
     .education-item:first-child::after {
         content: none;
         display: none;
@@ -264,17 +297,33 @@ button {
         position: absolute;
         background-color: var(--color-border);
         z-index: -1;
-        width: 4px;              /* Vertical line */
-        top: 40px;               /* Start at icon center */
-        height: calc(100% - 40px + 2rem); /* Extend to next item */
-        left: 40px;              /* Center on icon */
+        width: 4px;
+        /* Vertical line */
+        top: 40px;
+        /* Start at icon center */
+        height: calc(100% - 40px + 2rem);
+        /* Extend to next item */
+        left: 40px;
+        /* Center on icon */
         transform: translateX(-50%);
     }
 
     /* Z-index ordering for clean overlaps */
-    .education-item:nth-child(1) { z-index: 3; } /* School */
-    .education-item:nth-child(2) { z-index: 2; } /* Diploma */
-    .education-item:nth-child(3) { z-index: 1; } /* BTech */
+    .education-item:nth-child(1) {
+        z-index: 3;
+    }
+
+    /* School */
+    .education-item:nth-child(2) {
+        z-index: 2;
+    }
+
+    /* Diploma */
+    .education-item:nth-child(3) {
+        z-index: 1;
+    }
+
+    /* BTech */
 
     /* Switch items to horizontal row layout (icon left, card right) */
     .education-item {
@@ -304,10 +353,13 @@ button {
 /* ---- MOBILE (≤ 768px) ---- */
 @media (max-width: 768px) {
     :root {
-        --spacing-xl: 5rem;      /* Reduced section spacing */
-        --spacing-lg: 2.5rem;    /* Reduced block spacing */
+        --spacing-xl: 5rem;
+        /* Reduced section spacing */
+        --spacing-lg: 2.5rem;
+        /* Reduced block spacing */
         --spacing-md: 1.5rem;
-        --header-height: 60px;   /* Smaller header on mobile */
+        --header-height: 60px;
+        /* Smaller header on mobile */
     }
 
     .section {
@@ -341,19 +393,23 @@ button {
 /* ---- SMALL MOBILE (≤ 480px) ---- */
 @media (max-width: 480px) {
     :root {
-        --spacing-sm: 1.5rem;    /* More breathing room on tiny screens */
+        --spacing-sm: 1.5rem;
+        /* More breathing room on tiny screens */
     }
 
     .section-title {
-        font-size: 1.75rem;     /* Cap title size on small mobile */
+        font-size: 1.75rem;
+        /* Cap title size on small mobile */
     }
 
     .container {
-        padding: 0 1.25rem;    /* Tighter side padding */
+        padding: 0 1.25rem;
+        /* Tighter side padding */
     }
 
     .nav-list {
-        gap: 1rem;             /* Tighter nav spacing */
+        gap: 1rem;
+        /* Tighter nav spacing */
     }
 
     /* Further shrink education icons */
@@ -371,6 +427,7 @@ button {
     }
 
     .education-card {
-        padding: 1rem;          /* Tighter card padding */
+        padding: 1rem;
+        /* Tighter card padding */
     }
 }
