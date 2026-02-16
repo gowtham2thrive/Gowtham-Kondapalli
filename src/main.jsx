@@ -13,6 +13,8 @@ import './styles/global.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <div onContextMenu={(e) => e.preventDefault()}>
+      <App />
+    </div>
   </React.StrictMode>,
 )
