@@ -1,0 +1,376 @@
+/* ============================================================================
+ * GLOBAL STYLESHEET
+ * Main stylesheet for the portfolio application. Imports design tokens from
+ * variables.css, then defines the CSS reset, layout utilities, animations,
+ * responsive breakpoints, and the education timeline component styles.
+ * ============================================================================ */
+@import './variables.css';
+
+/* -------------------------------------------------------------------------- */
+/*  CSS RESET                                                                  */
+/*  Standard reset for consistent cross-browser rendering.                     */
+/* -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Root HTML element: sets base font, color, and smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+}
+
+/* Body: full viewport height, smooth font rendering, no text selection */
+body {
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;       /* App-like: disable text selection */
+    -webkit-user-select: none;
+    overflow-x: hidden;      /* Prevent horizontal scroll */
+    overflow-wrap: break-word; /* Prevent long text from breaking layout */
+}
+
+/* -------------------------------------------------------------------------- */
+/*  BASE ELEMENT STYLES                                                        */
+/*  Default styles for links, images, and buttons.                             */
+/* -------------------------------------------------------------------------- */
+
+/* Links: inherit color, smooth hover transition, no drag */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    -webkit-user-drag: none; /* App-like: disable link dragging */
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+/* Images: responsive by default, no drag */
+img {
+    max-width: 100%;
+    display: block;
+    -webkit-user-drag: none; /* App-like: disable image dragging */
+    user-select: none;
+}
+
+/* Buttons: reset browser defaults */
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+}
+
+/* -------------------------------------------------------------------------- */
+/*  LAYOUT UTILITIES                                                           */
+/*  Reusable container, section, and title classes used across all pages.       */
+/* -------------------------------------------------------------------------- */
+
+/* Container: centers content and limits max width */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1.5rem; /* Side padding for edge breathing room */
+    width: 100%;
+}
+
+/* Section: vertical padding for each page section */
+.section {
+    padding: var(--spacing-xl) 0;
+}
+
+/* Section Title: gradient text, responsive sizing */
+.section-title {
+    font-size: clamp(2rem, 5vw, 2.5rem); /* Responsive font size */
+    font-weight: 800;
+    margin-bottom: var(--spacing-lg);
+    padding-top: var(--spacing-md); /* Spacing above title */
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    line-height: 1.2; /* Tight line height for multi-line titles */
+}
+
+/* Header Navigation List: horizontal nav links */
+.nav-list {
+    display: flex;
+    gap: var(--spacing-md);
+    list-style: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  ANIMATIONS                                                                 */
+/*  Keyframes and utility classes for entrance animations.                     */
+/* -------------------------------------------------------------------------- */
+
+/* Fade-in with upward slide */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply to any element that should animate in on load */
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  EDUCATION TIMELINE (Desktop: Horizontal)                                   */
+/*  A horizontal timeline with icon nodes and content cards.                    */
+/*  Switches to vertical layout on tablet/mobile via media queries below.      */
+/* -------------------------------------------------------------------------- */
+
+/* Timeline container: horizontal row of education items */
+.education-timeline {
+    display: flex;
+    flex-direction: row;         /* Horizontal on desktop */
+    justify-content: space-between;
+    position: relative;
+    gap: 2rem;
+    margin-top: 4rem;            /* Space for floating cards */
+}
+
+/* Each timeline item: column of icon + card */
+.education-item {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Horizontal connector line between items (desktop only) */
+.education-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    background-color: var(--color-border);
+    z-index: -1;                  /* Behind icons */
+    top: 40px;                    /* Vertically centered on icon */
+    left: 50%;                    /* Start at icon center */
+    width: calc(100% + 2rem);    /* Span to next icon including gap */
+    height: 4px;
+}
+
+/* Remove unnecessary pseudo-elements on first/last items */
+.education-item:last-child::before,
+.education-item:first-child::before {
+    content: none;
+    display: none;
+}
+
+/* Icon/Logo circle wrapper */
+.education-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    border: 3px solid var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-primary);
+    z-index: 2;                  /* Above connector line */
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect: scale up icon and add glow */
+.education-item:hover .education-icon-wrapper {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--color-primary);
+}
+
+/* Education content card */
+.education-card {
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    width: 100%;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover effect: lift card and highlight border */
+.education-item:hover .education-card {
+    transform: translateY(-5px);
+    border-color: var(--color-primary);
+}
+
+/* -------------------------------------------------------------------------- */
+/*  RESPONSIVE BREAKPOINTS                                                     */
+/*  Ordered from largest to smallest for a "desktop-first" approach.           */
+/* -------------------------------------------------------------------------- */
+
+/* ---- TABLET (≤ 1024px) ---- */
+@media (max-width: 1024px) {
+    :root {
+        --spacing-xl: 8rem;      /* Section spacing */
+        --spacing-lg: 4rem;      /* Block spacing */
+    }
+
+    .container {
+        padding: 0 2rem;        /* Wider side padding on tablet */
+    }
+
+    /* Education: switch to vertical layout, reversed order (school → degree) */
+    .education-timeline {
+        flex-direction: column-reverse;
+        gap: 2rem;
+        margin-top: 0;
+        padding-left: 0;
+        padding-top: 2rem;
+        position: static;       /* Remove relative for clean stacking */
+    }
+
+    /* Remove horizontal connector lines */
+    .education-timeline::before {
+        content: none;
+        display: none;
+    }
+    .education-item:not(:last-child)::after {
+        content: none;
+    }
+    .education-item:first-child::after {
+        content: none;
+        display: none;
+    }
+
+    /* Vertical connector: downward lines from top/middle items */
+    .education-item:not(:first-child)::after {
+        content: '';
+        position: absolute;
+        background-color: var(--color-border);
+        z-index: -1;
+        width: 4px;              /* Vertical line */
+        top: 40px;               /* Start at icon center */
+        height: calc(100% - 40px + 2rem); /* Extend to next item */
+        left: 40px;              /* Center on icon */
+        transform: translateX(-50%);
+    }
+
+    /* Z-index ordering for clean overlaps */
+    .education-item:nth-child(1) { z-index: 3; } /* School */
+    .education-item:nth-child(2) { z-index: 2; } /* Diploma */
+    .education-item:nth-child(3) { z-index: 1; } /* BTech */
+
+    /* Switch items to horizontal row layout (icon left, card right) */
+    .education-item {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        padding-bottom: 0;
+        position: relative;
+    }
+
+    .education-icon-wrapper {
+        margin-bottom: 0;
+        margin-right: 1.5rem;
+        flex-shrink: 0;
+        transform: none;
+        margin-left: 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    .education-item:first-child,
+    .education-item:last-child {
+        padding-bottom: 0;
+    }
+}
+
+/* ---- MOBILE (≤ 768px) ---- */
+@media (max-width: 768px) {
+    :root {
+        --spacing-xl: 5rem;      /* Reduced section spacing */
+        --spacing-lg: 2.5rem;    /* Reduced block spacing */
+        --spacing-md: 1.5rem;
+        --header-height: 60px;   /* Smaller header on mobile */
+    }
+
+    .section {
+        padding: var(--spacing-lg) 0;
+    }
+
+    /* About section gets extra top padding for visual separation */
+    #about.section {
+        padding-top: var(--spacing-xl);
+    }
+
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    /* Shrink education icons on mobile */
+    .education-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    /* Adjust vertical connector position for smaller icons */
+    .education-item:not(:first-child)::after {
+        top: 30px;
+        height: calc(100% - 30px + 2rem);
+        left: 30px;
+    }
+}
+
+/* ---- SMALL MOBILE (≤ 480px) ---- */
+@media (max-width: 480px) {
+    :root {
+        --spacing-sm: 1.5rem;    /* More breathing room on tiny screens */
+    }
+
+    .section-title {
+        font-size: 1.75rem;     /* Cap title size on small mobile */
+    }
+
+    .container {
+        padding: 0 1.25rem;    /* Tighter side padding */
+    }
+
+    .nav-list {
+        gap: 1rem;             /* Tighter nav spacing */
+    }
+
+    /* Further shrink education icons */
+    .education-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    /* Adjust vertical connector for smallest icons */
+    .education-item:not(:first-child)::after {
+        top: 25px;
+        height: calc(100% - 25px + 2rem);
+        left: 25px;
+    }
+
+    .education-card {
+        padding: 1rem;          /* Tighter card padding */
+    }
+}

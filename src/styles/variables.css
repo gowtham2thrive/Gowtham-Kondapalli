@@ -1,0 +1,72 @@
+/* ============================================================================
+ * DESIGN TOKENS (CSS Custom Properties)
+ * Centralised design variables for colors, typography, spacing, fonts, and
+ * layout dimensions. Override these values in the [data-theme='light'] block
+ * to support a light theme.
+ * ============================================================================ */
+:root {
+    /* ---- Color Palette ---- */
+    --color-bg: #0f172a;
+    /* Page background (dark navy) */
+    --color-text: #e2e8f0;
+    /* Primary text color (light gray) */
+    --color-primary: #38bdf8;
+    /* Accent / highlight color (sky blue) */
+    --color-secondary: #818cf8;
+    /* Secondary accent (indigo) */
+    --color-accent: #f472b6;
+    /* Tertiary accent (pink) */
+    --color-surface: #1e293b;
+    /* Card / surface background */
+    --color-border: #334155;
+    /* Border / divider color */
+
+    /* ---- Typography ---- */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Fira Code', monospace;
+
+    /* ---- Spacing Scale ---- */
+    --spacing-xs: 0.5rem;
+    /* 8px  — tiny gaps */
+    --spacing-sm: 1rem;
+    /* 16px — small gaps */
+    --spacing-md: 2rem;
+    /* 32px — medium gaps */
+    --spacing-lg: 4rem;
+    /* 64px — large blocks */
+    --spacing-xl: 8rem;
+    /* 128px — section separators */
+
+    /* ---- Font Size Scale ---- */
+    --font-size-xs: 0.75rem;
+    /* 12px */
+    --font-size-sm: 0.875rem;
+    /* 14px */
+    --font-size-base: 1rem;
+    /* 16px */
+    --font-size-lg: 1.125rem;
+    /* 18px */
+    --font-size-xl: 1.25rem;
+    /* 20px */
+    --font-size-2xl: 1.5rem;
+    /* 24px */
+    --font-size-3xl: 2rem;
+    /* 32px */
+
+    /* ---- Layout ---- */
+    --container-width: 1200px;
+    /* Max content width */
+    --header-height: 80px;
+    /* Fixed header height */
+}
+
+/* ---- Light Theme Override ---- */
+[data-theme='light'] {
+    --color-bg: #ffffff;
+    --color-text: #0f172a;
+    --color-primary: #0284c7;
+    --color-secondary: #6366f1;
+    --color-accent: #db2777;
+    --color-surface: #f8fafc;
+    --color-border: #e2e8f0;
+}
